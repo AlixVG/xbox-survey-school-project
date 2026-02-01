@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Enquête</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .visible {
+            display: block;
+        }
+    </style>
+</head>
+<body class="survey">
+    <img src="images/xboxlogo.png" alt="Xbox Logo" width="360" height="240"  class="logo">
+    <div class="container">
+    <h1>Votre avis nous intéresse !</h1>
+    <div id="greeting" class="greeting"></div>
+    <form action="enregistrer.php" method="POST">
+
+        <input type="hidden" id="prenom" name="prenom" value="">
+        <input type="hidden" id="nom" name="nom" value="">
+
+        <br>
+        <div id="step1" class="visible">
+            <label id="ageLabel" for="age">À quel groupe d'âge appartenez-vous ?</label>
+            <select id="age" name="age" required>
+                <option value="18-24">18-24</option>
+                <option value="25-34">25-34</option>
+                <option value="35-44">35-44</option>
+                <option value="45+">45+</option>
+            </select>
+            <br>
+            <button type="button" onclick="nextStep(1)">Suivant</button>
+        </div>
+        <div id="step2" class="hidden">
+            <label id="sexLabel" for="sexe">Quel est votre sexe ?</label>
+            <select id="sexe" name="sexe" required>
+                <option value="homme">Homme</option>
+                <option value="femme">Femme</option>
+                <option value="non-binaire">Non-binaire</option>
+                <option value="autre">Autre</option>
+                <option value="préfère ne pas dire">Préfère ne pas dire</option>
+            </select>
+            <br>
+            <div class="button-container">
+                <button type="button" onclick="previousStep(2)">Précédent</button>
+                <button type="button" onclick="nextStep(2)">Suivant</button>
+            </div>
+        </div>
+        <div id="step3" class="hidden">
+            <label id="utilLabel" for="temps">Depuis combien de temps êtes-vous utilisateur d'une (ou de plusieurs) console(s) Xbox ?</label>
+            <select id="temps" name="temps" required>
+                <option value="3-12 mois">3-12 mois</option>
+                <option value="1-3 ans">1-3 ans</option>
+                <option value="3-5 ans">3-5 ans</option>
+                <option value="5-8 ans">5-8 ans</option>
+                <option value="8-12 ans">8-12 ans</option>
+                <option value="12-15 ans">12-15 ans</option>
+                <option value="15+ ans">15+ ans</option>
+            </select>
+            <br>
+            <div class="button-container">
+                <button type="button" onclick="previousStep(3)">Précédent</button>
+                <button type="button" onclick="nextStep(3)">Suivant</button>
+            </div>
+        </div>
+        <div id="step4" class="hidden">
+            <label id="noteLabel" for="note">Dans l'ensemble, quelle note donneriez-vous aux consoles Xbox ?</label>
+            <div id="starRating">
+                <span class="star" data-value="1">&#9734;</span>
+                <span class="star" data-value="2">&#9734;</span>
+                <span class="star" data-value="3">&#9734;</span>
+                <span class="star" data-value="4">&#9734;</span>
+                <span class="star" data-value="5">&#9734;</span>
+            </div>
+                <input type="hidden" id="note" name="note" value="0">
+                <br>
+            <div class="button-container">
+                <button type="button" onclick="previousStep(4)">Précédent</button>
+                <button type="button" onclick="nextStep(4)">Suivant</button>
+            </div>
+        </div>
+        <div id="step5" class="hidden">
+            <label id ="avisLabel" for="avis">Expliquez votre note (max 280 caractères)</label>
+            <textarea id="avis" name="avis" maxlength="280" required></textarea>
+            <br>
+            <div class="button-container">
+                <button type="button" onclick="previousStep(5)">Précédent</button>
+                <button type="button" onclick="nextStep(5)">Suivant</button>
+            </div>
+        </div>
+        <div id="step6" class="hidden">
+            <label id="favLabel" for="favoris">Parmi les séries de jeux suivantes, laquelle est votre préférée ?</label>
+            <select id="fav" name="fav" required>
+                <option value="Call of Duty">Call of Duty</option>
+                <option value="Fortnite">Fortnite</option>
+                <option value="Minecraft">Minecraft</option>
+                <option value="Grand Theft Auto">Grand Theft Auto</option>
+                <option value="Apex Legends">Apex Legends</option>
+                <option value="EA Sports">EA Sports</option>
+                <option value="Microsoft Flight Simulator">Microsoft Flight Simulator</option>
+                <option value="Red Dead Redemption">Red Dead Redemption</option>
+                <option value="Genshin Impact">Genshin Impact</option>
+                <option value="Aucun">Aucun</option>
+            </select>
+            <br>
+            <div class="button-container">
+                <button type="button" onclick="previousStep(5)">Précédent</button>
+                <button type="submit">Envoyer</button>
+            </div>
+        </div>
+    </form>
+    </div>
+
+    <script>
+
+        document.querySelectorAll('#starRating .star').forEach(star => {
+            star.addEventListener('click', function () {
+                const value = this.getAttribute('data-value');
+                document.getElementById('note').value = value;
+                updateStars(value);
+            });
+
+            star.addEventListener('mouseover', function () {
+                const value = this.getAttribute('data-value');
+                updateStars(value);
+            });
+
+            star.addEventListener('mouseout', function () {
+                const selectedValue = document.getElementById('note').value;
+                updateStars(selectedValue);
+            });
+        });
+
+        function updateStars(value) {
+            const stars = document.querySelectorAll('#starRating .star');
+            stars.forEach(star => {
+                if (parseInt(star.getAttribute('data-value')) <= value) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+
+        function nextStep(currentStep) {
+
+            const currentDiv = document.getElementById(`step${currentStep}`);
+            currentDiv.classList.remove('visible');
+            currentDiv.classList.add('hidden');
+
+            const nextDiv = document.getElementById(`step${currentStep + 1}`);
+            if (nextDiv) {
+                nextDiv.classList.remove('hidden');
+                nextDiv.classList.add('visible');
+            }
+        }
+
+        function previousStep(currentStep) {
+
+            const currentDiv = document.getElementById(`step${currentStep}`);
+            currentDiv.classList.remove('visible');
+            currentDiv.classList.add('hidden');
+
+            const previousDiv = document.getElementById(`step${currentStep - 1}`);
+            if (previousDiv) {
+                previousDiv.classList.remove('hidden');
+                previousDiv.classList.add('visible');
+            }
+        }
+
+        function updateValue(value) {
+            document.getElementById('noteValue').innerText = value;
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const prenom = getCookie('prenom') || '';
+
+            document.getElementById('prenom').value = prenom;
+
+         if (prenom) {
+                document.getElementById('ageLabel').textContent = `${prenom}, à quel groupe d'âge appartenez-vous ?`;
+                document.getElementById('sexLabel').textContent = `${prenom}, quel est votre sexe ?`;
+                document.getElementById('utilLabel').textContent = `${prenom}, depuis combien de temps êtes-vous utilisateur d'une (ou de plusieurs) console(s) Xbox ?`;
+                document.getElementById('favLabel').textContent = `${prenom}, parmi les séries de jeux suivantes, laquelle est votre préférée ?`;
+                document.getElementById('noteLabel').textContent = `${prenom}, quelle note donneriez-vous à la Xbox ?`;
+                document.getElementById('avisLabel').textContent = `${prenom}, expliquez votre note (max 280 caractères)`;
+            }
+        });
+    </script>
+</body>
+</html>
+

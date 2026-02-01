@@ -1,0 +1,235 @@
+body {
+    font-family: Segoe UI, sans-serif;
+    color: white;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #2B2A33;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    font-family: Segoe UI, sans-serif;
+    max-height: 100%;
+    width: 40%;
+    color: white;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background: rgba(66, 65, 77, 0.90);
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 300px;
+    border-color: #147c18;
+}
+
+.chart-container {
+    font-family: Segoe UI, sans-serif;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-container > div {
+    flex: 1;
+    max-width: 45%;
+}
+
+#starRating {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: gray;
+}
+
+.star:hover,
+.star.selected {
+    color: gold;
+}
+
+.index, .survey {
+    font-family: Segoe UI, sans-serif;
+    height: 100%;
+    overflow: hidden;
+    background-image: linear-gradient(black, #147c18);
+    background-image: url('images/xboxbg.jpg');
+    background-repeat: no-repeat; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+.logo {
+    top: 0;
+    left: 0;
+    margin-top: -50px;
+    position: fixed;
+}
+
+
+h1 {
+    font-family: Segoe UI, sans-serif;
+    text-align: center;
+    text-shadow: 1px 1px 2px #1C1427;
+    color: white;
+}
+
+h2, h3 {
+    font-family: Segoe UI, sans-serif;
+    text-align: center;
+    text-shadow: 1px 1px 2px #1C1427;
+}
+
+label {
+    font-family: Segoe UI, sans-serif;
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input {
+    font-family: Segoe UI, sans-serif;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    font-family: Segoe UI, sans-serif;
+    width: 60%;
+    padding: 10px;
+    margin: 20px;
+    text-shadow: 1px 1px 2px #1C1427;
+    background: #147c18;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #218838;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-container button {
+    flex: 1;
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+}
+
+/* Label styles */
+label {
+    font-family: Segoe UI, sans-serif;s
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #1C1427;
+    display: block;
+    margin-bottom: 10px;
+}
+
+select {
+    font-family: Segoe UI, sans-serif;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+select:hover {
+    background-color: #e6e6e6;
+}
+
+select:focus {
+    border-color: #147c18;
+    outline: none;
+    box-shadow: 0 0 5px rgba(20, 124, 24, 0.5);
+}
+
+input[type="range"] {
+    width: 300px;
+    -webkit-appearance: none;
+    background: #ddd;
+    height: 8px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+input[type="text"] {
+    font-family: Segoe UI, sans-serif;
+    width: 80%;
+    max-width: 800px;
+    padding: 10px;
+    background: #2B2A33;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+input[type="text"]:focus {
+    border-color: #147c18;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+    outline: none;
+}

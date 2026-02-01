@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        canvas {
+            max-width: 800px;
+            max-height: 450px;
+            margin:50px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <img src="images/xboxlogo.png" alt="Xbox Logo" width="360" height="240"  class="logo">
+    <br>
+    <br>
+    <h1>Merci pour votre participation !</h1>
+    <br>
+    <h2>Voici les réponses des autres participants...</h2>
+    <br>
+    <br>
+<div class="chart-container">
+    <div>
+        <h3>Distribution par groupe d'âge​</h3>
+        <br>
+        <canvas id="ageChart"></canvas>
+    </div>
+
+    <div>
+        <h3>Distribution par genre ♀️​ ♂️​</h3>
+        <br>
+        <canvas id="genderChart"></canvas>
+    </div>
+
+    <div>
+        <h3>Temps d'utilisation des consoles Xbox​</h3>
+        <br>
+        <canvas id="utilChart"></canvas>
+    </div>
+
+    <div>
+        <h3>Notes attribuées ⭐​</h3>
+        <br>
+        <canvas id="noteChart"></canvas>
+    </div>
+
+
+    <div>
+        <h3>Vos jeux préférés 🏆​</h3>
+        <br>
+        <canvas id="favChart"></canvas>
+    </div>
+
+</div>
+
+    <script>
+        fetch('getData.php')
+            .then(response => response.json())
+            .then(data => {
+
+                const ageCtx = document.getElementById('ageChart');
+                new Chart(ageCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.ageGroups,
+                        datasets: [{
+                            label: 'Âge des participants',
+                            data: data.ageCounts,
+                            backgroundColor: 'rgb(20,124,24)',
+                            borderColor: 'rgb(20,124,24)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    padding: 0,
+                                    boxWidth: 20,
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 20
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+
+                const sexCtx = document.getElementById('genderChart');
+                new Chart(sexCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.sexGroups,
+                        datasets: [{
+                            label: 'Genre des participants',
+                            data: data.sexCounts,
+                            backgroundColor: 'rgb(20,124,24)',
+                            borderColor: 'rgb(20,124,24)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    padding: 0,
+                                    boxWidth: 20,
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 20
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+
+                const utilCtx = document.getElementById('utilChart');
+                new Chart(utilCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.utilGroups,
+                        datasets: [{
+                            label: 'Temps d\'utilisation',
+                            data: data.utilCounts,
+                            backgroundColor: 'rgb(20,124,24)',
+                            borderColor: 'rgb(20,124,24)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    padding: 0,
+                                    boxWidth: 20,
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 20
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+
+                console.log('Notes:', data.notes);
+                console.log('Note Counts:', data.noteCounts);
+
+                const sortedNotes = data.notes.map(Number).sort((a, b) => a - b);
+                const sortedNoteCounts = sortedNotes.map(note => {
+                    const index = data.notes.findIndex(originalNote => originalNote === note);
+                    return data.noteCounts[index];
+                });
+                const sortedNotesWithStars = sortedNotes.map((note, index) => {
+                    const stars = "★".repeat(note);
+                    return `${stars} (${sortedNoteCounts[index]})`;
+                });
+
+                console.log('Sorted Notes:', sortedNotes);
+                console.log('Sorted Note Counts:', sortedNoteCounts);
+
+                const noteCtx = document.getElementById('noteChart');
+                new Chart(noteCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: sortedNotesWithStars,
+                        datasets: [{
+                            label: 'Proportion des votes',
+                            data: sortedNoteCounts,
+                            backgroundColor: [
+                                'rgba(255, 99, 132)',
+                                'rgba(54, 162, 235)',
+                                'rgba(255, 206, 86)',
+                                'rgba(75, 192, 192)',
+                                'rgba(153, 102, 255)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132)',
+                                'rgba(54, 162, 235)',
+                                'rgba(255, 206, 86)',
+                                'rgba(75, 192, 192)',
+                                'rgba(153, 102, 255)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: true,
+                        responsive: false,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        }
+                    }
+                });
+
+                const favCtx = document.getElementById('favChart');
+                new Chart(favCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.favGroups,
+                        datasets: [{
+                            label: 'Vos jeux préférés',
+                            data: data.favCounts,
+                            backgroundColor: [
+                                'rgba(255, 99, 132)',  // Red
+                                'rgba(54, 162, 235)',  // Blue
+                                'rgba(255, 206, 86)',  // Yellow
+                                'rgba(75, 192, 192)',  // Teal
+                                'rgba(153, 102, 255)', // Purple
+                                'rgba(255, 159, 64)',  // Orange
+                                'rgba(201, 203, 207)', // Gray
+                                'rgba(103, 255, 102)', // Light Green
+                                'rgba(102, 102, 255)', // Light Blue
+                                'rgba(255, 102, 204)'  // Pink
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132)',  // Red
+                                'rgba(54, 162, 235)',  // Blue
+                                'rgba(255, 206, 86)',  // Yellow
+                                'rgba(75, 192, 192)',  // Teal
+                                'rgba(153, 102, 255)', // Purple
+                                'rgba(255, 159, 64)',  // Orange
+                                'rgba(201, 203, 207)', // Gray
+                                'rgba(103, 255, 102)', // Light Green
+                                'rgba(102, 102, 255)', // Light Blue
+                                'rgba(255, 102, 204)'  // Pink
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: true,
+                        responsive: false,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        }
+                    }
+                });
+
+            })
+            .catch(error => console.error('Erreur lors de la récupération des données :', error));
+    </script>
+</body>
+</html>
