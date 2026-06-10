@@ -1,12 +1,9 @@
 <?php
-// =============================================
-// Configuration de la connexion à la base MySQL
-// =============================================
 
 $host = 'localhost';
 $dbname = 'xboxsurvey';
-$username = 'root';       // Utilisateur par défaut de WAMP
-$password = '';            // Mot de passe vide par défaut sur WAMP
+$username = 'root';
+$password = '';
 
 try {
     $pdo = new PDO(
